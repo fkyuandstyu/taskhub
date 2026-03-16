@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: taskhub-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: taskhub_db
+      MYSQL_ROOT_PASSWORD: my_root_pw
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql

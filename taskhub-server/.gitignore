@@ -1,0 +1,4 @@
+# 排除整層資料夾 (最保險的寫法)
+**/mysql_data/
+taskhub-server/mysql_data/
+*.sock
