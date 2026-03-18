@@ -9,14 +9,16 @@ import java.util.List;
 @Service
 public class TaskService {
 
-    @Autowired // 自動把上面的 Repository 抓過來用
+    @Autowired
     private TaskRepository taskRepository;
 
+    // 取得所有任務
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
 
-    public Task createTask(Task task) {
+    public Task saveTask(Task task) {
+        // 呼叫倉庫的 save 方法，它會自動判斷要執行 INSERT 還是 UPDATE
         return taskRepository.save(task);
     }
 }
