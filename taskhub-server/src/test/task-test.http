@@ -1,0 +1,19 @@
+### 1. 測試 GET (取得所有任務)
+# 使用 admin / 123456 登入
+GET http://localhost:8080/api/tasks
+Authorization: Basic admin 123456
+Accept: application/json
+
+### --------------------------------------------------
+
+### 2. 測試 POST (新增任務)
+# 注意：如果你沒關閉 CSRF，這步有機率回傳 403 Forbidden
+POST http://localhost:8080/api/tasks
+Authorization: Basic admin 123456
+Content-Type: application/json
+
+{
+  "title": "使用固定帳號測試",
+  "description": "這是 admin 帳號新增的任務",
+  "completed": false
+}
