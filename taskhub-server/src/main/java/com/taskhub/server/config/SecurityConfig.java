@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // 🏆 就是缺這一段！這會產生一個 PasswordEncoder 放在 Spring 容器裡
+    //這會產生一個 PasswordEncoder 放在 Spring 容器裡
     // 這樣 UserService 才能透過 @Autowired 找到它
     @Bean
     public PasswordEncoder passwordEncoder() {

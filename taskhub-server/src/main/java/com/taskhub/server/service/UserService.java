@@ -16,14 +16,14 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder; // 這是在 SecurityConfig 定義的加密工具
     // 取得所有任務
-    public User registerNewUser(User user) {
-        // 1. 將明文密碼進行 BCrypt 雜湊加密
+    public void saveUser(User user) {
+        // 1. 將明文密碼進行雜湊處理 (Hashing)
         String encodedPassword = passwordEncoder.encode(user.getPassword());
 
-        // 2. 把加密後的密碼塞回 User 物件
+        // 2. 把雜湊後的密碼設定回 User 物件
         user.setPassword(encodedPassword);
 
-        // 3. 存入資料庫
-        return userRepository.save(user);
+        // 3. 透過 Repository 存入 MySQL
+        userRepository.save(user);
     }
 }
