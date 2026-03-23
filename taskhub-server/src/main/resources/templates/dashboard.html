@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskHub - 登入</title>
+    <style>
+        body { font-family: Arial; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        .login-card h2 { text-align: center; color: #1a73e8; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .btn-login { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        /* 訊息樣式 */
+        .alert-success { color: #155724; background-color: #d4edda; padding: 10px; border-radius: 6px; margin-bottom: 1rem; text-align: center; }
+        .alert-error { color: #721c24; background-color: #f8d7da; padding: 10px; border-radius: 6px; margin-bottom: 1rem; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h2>TaskHub</h2>
+
+    <div th:if="${param.success}" class="alert-success">
+        註冊成功！請登入。
+    </div>
+
+    <div th:if="${param.error}" class="alert-error">
+        帳號或密碼錯誤，請再試一次。
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label>使用者名稱</label>
+            <input type="text" name="username" required>
+        </div>
+        <div class="form-group">
+            <label>密碼</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-login">登入</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1rem;">
+        還沒有帳號？ <a href="/register">立即註冊</a>
+    </div>
+</div>
+
+</body>
+</html>

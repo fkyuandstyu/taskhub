@@ -19,17 +19,35 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    @Bean // 將回傳的物件註冊為 Spring 容器中的一個 Bean，供系統使用。
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // 先關閉，確保註冊 POST 能通
+                // 1. 關閉 CSRF 保護 (在開發階段為了測試方便常先關閉，但生產環境建議開啟)
+                .csrf(csrf -> csrf.disable())
+
+                // 2. 設定請求的授權規則
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login", "/h2-console/**").permitAll()
+                        // 這些路徑（註冊、登入、靜態 CSS 檔案）「所有人」都能直接存取，不用登入。
+                        .requestMatchers("/register", "/login", "/css/**").permitAll()
+                        // 除了上面以外的所有請求，都必須「經過身份驗證（登入）」才能進入。
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.loginPage("/login").permitAll())
-                .headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
-        return http.build();
+                // 3. 設定表單登入邏輯
+                .formLogin(form -> form
+                        .loginPage("/login") // 自定義的登入頁面網址
+                        .loginProcessingUrl("/login") // HTML 表單提交 (POST) 的目標網址
+                        .defaultSuccessUrl("/dashboard", true) // 登入成功後跳轉到的首頁
+                        .failureUrl("/login?error") // 登入失敗後回到的頁面（帶上 error 參數）
+                        .permitAll() // 允許所有人存取登入相關功能
+                )
+
+                // 4. 設定登出邏輯
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout") // 登出成功後跳轉到的頁面
+                        .permitAll()
+                );
+
+        return http.build(); // 建構出這一套安全過濾鏈
     }
 }
