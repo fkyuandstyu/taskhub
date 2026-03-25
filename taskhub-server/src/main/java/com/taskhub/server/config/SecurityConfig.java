@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 // 1. 關閉 CSRF 保護 (在開發階段為了測試方便常先關閉，但生產環境建議開啟)
-                .csrf(csrf -> csrf.disable())
+                //.csrf(csrf -> csrf.disable())
 
                 // 2. 設定請求的授權規則
                 .authorizeHttpRequests(auth -> auth
